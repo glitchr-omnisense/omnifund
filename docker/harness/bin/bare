@@ -1,0 +1,54 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * Omnifund in plain PHP: no bundle, no container, no framework. A registry
+ * with one provider of fixed data; its profile (a weekly income turned
+ * monthly, a goal), its sponsors (the first two) and tiers; a provider asked
+ * for what it cannot give; an answer walked with the typed readers. Prints
+ * what happened and every class and file PHP loaded, as JSON.
+ */
+
+use Omnifund\Exception\InvalidConfigException;
+use Omnifund\Http\Json;
+use Omnifund\Model\Goal;
+use Omnifund\Model\Income;
+use Omnifund\Model\Money;
+use Omnifund\Model\Period;
+use Omnifund\Model\Profile;
+use Omnifund\Model\Sponsor;
+use Omnifund\Model\Tier;
+use Omnifund\Registry;
+use Omnifund\Testing\ArrayFactory;
+
+require getenv('OMNIFUND_AUTOLOAD') ?: '/harness/vendor/autoload.php';
+
+$registry = new Registry([new ArrayFactory()], [
+    'fixed' => ['factory' => 'array', 'options' => [
+        'profile' => new Profile('array', 'glitchr-studio', 'Glitch Art', url: 'https://example.org/glitchr-studio', sponsors: 3,
+            income: new Income(Money::fromDecimal('12.00', 'EUR'), Period::Week), goal: new Goal('A day a week', amount: Money::fromDecimal('100', 'EUR'), period: Period::Week)),
+        'sponsors' => [new Sponsor('ada', 'Ada'), new Sponsor('acme', 'ACME', kind: Sponsor::ORGANIZATION, tier: 'Sponsor'), new Sponsor('bob')],
+        'tiers' => [new Tier('Backer', Money::fromDecimal(5, 'EUR')), new Tier('Once', null, Period::Once, customAmount: true)],
+    ]],
+    'nowhere' => ['factory' => 'missing'],
+]);
+
+$profile = $registry->profile('fixed')->profile();
+$report['profile'] = $profile->toArray();
+$report['monthly'] = $profile->income?->monthly()?->decimal();
+$report['sponsors'] = array_map(static fn (Sponsor $s) => $s->label(), $registry->sponsors('fixed')->sponsors(limit: 2));
+$report['tiers'] = array_map(static fn (Tier $t) => [$t->name, $t->price?->decimal(), $t->period->value], $registry->tiers('fixed')->tiers());
+$report['capabilities'] = $registry->get('fixed')->capabilities()->contracts();
+try {
+    $registry->get('nowhere');
+} catch (InvalidConfigException $e) {
+    $report['missing'] = $e->getMessage();
+}
+$answer = json_decode('{"data":{"account":{"stats":{"contributorsCount":"42"},"since":"2016-10-15T15:47:40.951Z"}}}', true);
+$report['read'] = [Json::int($answer, 'data', 'account', 'stats', 'contributorsCount'), Json::date($answer, 'data', 'account', 'since')?->format('Y-m-d'), Json::string($answer, 'data', 'nothing')];
+
+echo json_encode($report + ['loaded' => [
+    'symbols' => [...get_declared_classes(), ...get_declared_interfaces(), ...get_declared_traits()],
+    'files' => array_map('realpath', get_included_files()),
+    'eager' => array_map('realpath', array_values(is_file($f = dirname((string) (new ReflectionClass(Composer\Autoload\ClassLoader::class))->getFileName()).'/autoload_files.php') ? require $f : [])),
+]], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), "\n";

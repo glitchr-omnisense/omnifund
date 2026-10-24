@@ -1,0 +1,31 @@
+# omniscient/omnifund with every omnifund/* provider:
+#
+#   docker compose run --rm omnifund test       # every package's tests (recorded answers, no network)
+#   docker compose run --rm omnifund bare       # plain PHP: a registry, a profile, sponsors, tiers - and what PHP loaded
+#   docker compose run --rm omnifund live       # the checks that reach Open Collective and Liberapay (no key), and
+#                                               # GitHub when OMNIFUND_GITHUB_TOKEN is set
+#   docker compose run --rm omnifund phpstan    # PHPStan, each package at the highest level
+#   docker compose down -v                      # the harness's volume gone
+#
+# Providers come from GitHub (branch 1.x) unless their checkout sits under OMNIFUND_PLUGINS (set it
+# to ../.. in .env when this core sits in the workspace beside them): then that checkout is what runs.
+name: omnifund-harness
+
+services:
+  omnifund:
+    build: .
+    image: omniscient/omnifund-harness
+    # One service, no server beside it: Docker's default bridge, no network of its own to create.
+    network_mode: bridge
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      OMNIFUND_GITHUB_TOKEN: ${OMNIFUND_GITHUB_TOKEN:-}
+    volumes:
+      - ..:/omnifund/core
+      - ${OMNIFUND_PLUGINS:-./plugins}:/omnifund/plugins:ro
+      - harness:/harness
+
+volumes:
+  harness:

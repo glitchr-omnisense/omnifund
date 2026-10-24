@@ -1,0 +1,50 @@
+{
+    "name": "omniscient/omnifund",
+    "type": "library",
+    "description": "Omnifund: who funds a project, read under any PHP host, wherever the funding is received - the profile (backers counted, income, goal), the sponsors and the tiers offered, from GitHub Sponsors, Open Collective or Liberapay. Providers are packages of their own (omnifund/github-sponsors, omnifund/opencollective, omnifund/liberapay); no framework in require.",
+    "keywords": ["sponsors", "sponsorship", "funding", "donations", "github-sponsors", "opencollective", "liberapay", "framework-agnostic", "omnifund"],
+    "homepage": "https://github.com/glitchr-studio/omnifund",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marco Meyer",
+            "email": "marco.meyer@glitchr.io"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "symfony/http-client-contracts": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0",
+        "symfony/http-client": "^6.4|^7.0|^8.0"
+    },
+    "suggest": {
+        "omnifund/github-sponsors": "GitHub Sponsors: the listing, its goal and tiers, the public sponsors (GraphQL, a token)",
+        "omnifund/opencollective": "Open Collective: the collective, its tiers and stats, its backers (GraphQL v2, public data without a key)",
+        "omnifund/liberapay": "Liberapay: the public profile - patrons counted, weekly income, goal (public.json, no key)",
+        "symfony/http-client": "An HTTP client for the providers (any symfony/http-client-contracts implementation does)"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omnifund\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/",
+            "/docker/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Omnifund\\Tests\\": "Tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-1.x": "1.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
