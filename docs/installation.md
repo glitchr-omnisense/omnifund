@@ -1,6 +1,6 @@
 # Installation, in plain PHP
 
-    composer require omniscient/omnifund omnifund/liberapay symfony/http-client
+    composer require omnisense/omnifund omnifund/liberapay symfony/http-client
 
 Any `symfony/http-client-contracts` client does: the factories take the application's own. The
 block below runs as written in the tests (`Tests/DocsTest.php`), with a recorded answer in place

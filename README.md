@@ -1,4 +1,4 @@
-# omniscient/omnifund
+# omnisense/omnifund
 
 Who funds a project, read under any PHP host, wherever the funding is received: the account's
 profile (how many fund it, what it receives, its goal), its public sponsors and the tiers it
@@ -36,11 +36,11 @@ $registry->profile('liberapay')->profile()->income;     // Model\Income: 636.28 
 - **Http\Json**: a JSON call on the application's client, its failures as omnifund's exceptions
   (`UnreachableException`, `ProviderException`), and typed reads of an answer.
 - **Providers** are packages:
-  [omnifund/github-sponsors](https://github.com/glitchr-studio/omnifund-github-sponsors) (profile,
+  [omnifund/github-sponsors](https://github.com/glitchr-omnisense/omnifund-github-sponsors) (profile,
   sponsors, tiers; a token),
-  [omnifund/opencollective](https://github.com/glitchr-studio/omnifund-opencollective) (profile,
+  [omnifund/opencollective](https://github.com/glitchr-omnisense/omnifund-opencollective) (profile,
   backers, tiers; no key),
-  [omnifund/liberapay](https://github.com/glitchr-studio/omnifund-liberapay) (profile only:
+  [omnifund/liberapay](https://github.com/glitchr-omnisense/omnifund-liberapay) (profile only:
   Liberapay keeps patrons private and has no tiers; no key).
 - **Hosts**: nothing of a framework here. The bridges (omnibridge/symfony, omnibridge/laravel)
   wire omnifund when the first site needs it; until then a site builds the `Registry` itself.
@@ -70,12 +70,12 @@ $registry->profile('liberapay')->profile()->income;     // Model\Income: 636.28 
   sindresorhus's tiers and two sponsors).
 - Not verified: GitHub's goal as a live answer (no listing at hand had an active goal: the
   shape is GitHub's schema, accepted by the live query); an Open Collective personal token;
-  any site using omnifund (none yet - the omniscient site still reads GitHub Sponsors with its
+  any site using omnifund (none yet - the omnisense site still reads GitHub Sponsors with its
   own call).
 
 ## Responsibility
 
-omniscient/omnifund and its omnifund/* providers are unofficial clients, affiliated with none of
+omnisense/omnifund and its omnifund/* providers are unofficial clients, affiliated with none of
 the services they reach. The MIT licence covers the code only and grants no right to any service
 or its data; whoever runs them complies with each service's terms (named in each provider's
 README and in `Capabilities::$terms`) and obtains what they require. Sponsors' names and pictures

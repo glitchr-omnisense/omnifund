@@ -1,9 +1,9 @@
 {
-    "name": "omniscient/omnifund",
+    "name": "omnisense/omnifund",
     "type": "library",
     "description": "Omnifund: who funds a project, read under any PHP host, wherever the funding is received - the profile (backers counted, income, goal), the sponsors and the tiers offered, from GitHub Sponsors, Open Collective or Liberapay. Providers are packages of their own (omnifund/github-sponsors, omnifund/opencollective, omnifund/liberapay); no framework in require.",
     "keywords": ["sponsors", "sponsorship", "funding", "donations", "github-sponsors", "opencollective", "liberapay", "framework-agnostic", "omnifund"],
-    "homepage": "https://github.com/glitchr-studio/omnifund",
+    "homepage": "https://github.com/glitchr-omnisense/omnifund",
     "license": "MIT",
     "authors": [
         {
@@ -24,6 +24,9 @@
         "omnifund/opencollective": "Open Collective: the collective, its tiers and stats, its backers (GraphQL v2, public data without a key)",
         "omnifund/liberapay": "Liberapay: the public profile - patrons counted, weekly income, goal (public.json, no key)",
         "symfony/http-client": "An HTTP client for the providers (any symfony/http-client-contracts implementation does)"
+    },
+    "replace": {
+        "omniscient/omnifund": "self.version"
     },
     "autoload": {
         "psr-4": {

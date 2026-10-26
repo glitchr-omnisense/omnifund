@@ -6,7 +6,7 @@ use Omnifund\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
- * omniscient/omnifund with no framework: in PHP processes of their own
+ * omnisense/omnifund with no framework: in PHP processes of their own
  * (this one has loaded PHPUnit), the harness's bare script builds a
  * registry, reads a profile, sponsors and tiers - and every class of the
  * package is loaded. Nothing may come from outside the package but what it
