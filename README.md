@@ -50,9 +50,17 @@ $registry->profile('liberapay')->profile()->income;     // Model\Income: 636.28 
 
 ## Documentation
 
-- [Installation, in plain PHP](docs/installation.md) (run as written by the tests)
-- [Writing a provider](docs/providers.md)
+- [Overview](docs/index.md): the providers and what each answers
+- [Installation](docs/installation.md) (its script run as written by the tests)
+- [Symfony](docs/symfony.md) and [Laravel](docs/laravel.md): the registry as a service, by hand
+- [Concepts](docs/concepts.md): contracts, capabilities, factories, the registry, every model
+- [Usage](docs/usage.md): profiles, sponsors, tiers, several platforms, caching
+- [Configuration reference](docs/configuration.md): every provider's options
+- [Errors](docs/errors.md)
+- [Testing](docs/testing.md): the array provider, recorded answers, live checks
 - [The harness](docs/harness.md)
+- [Writing a provider](docs/providers.md)
+- [Verified, and not](docs/verified.md)
 
 ## Verified, and not
 
