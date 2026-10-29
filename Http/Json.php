@@ -32,11 +32,11 @@ final class Json
             throw Redaction::withoutArguments(new UnreachableException(\sprintf('%s could not be reached for %s: %s', $provider, $what, Redaction::text($e->getMessage(), $secrets)), 0, Redaction::copy($e, $secrets)));
         }
         if ($status >= 300) {
-            throw ProviderException::answered($provider, $what, $status);
+            throw Redaction::withoutArguments(ProviderException::answered($provider, $what, $status));
         }
         $data = json_decode($body, true);
 
-        return \is_array($data) ? $data : throw ProviderException::answered($provider, $what, 'something that is not JSON');
+        return \is_array($data) ? $data : throw Redaction::withoutArguments(ProviderException::answered($provider, $what, 'something that is not JSON'));
     }
 
     /** The value at a path of keys; null when any step is missing. */

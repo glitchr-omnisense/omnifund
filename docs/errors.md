@@ -38,7 +38,8 @@ called: its key parameters, a password in its user part and every secret of the 
 (GitHub's and Open Collective's tokens) are masked (`api_key=***`, `Http\Redaction::text()`). The
 previous exception is a copy of the client's (`Redaction::copy()`: the same class and code, that
 message), and no trace of the chain keeps its arguments, where the query and headers stood: a log
-that writes the whole chain, arguments included (`zend.exception_ignore_args` off), holds no key.
+that writes the whole chain, arguments included (`zend.exception_ignore_args` off), holds no key. Nor does an error answered (a refused key, nothing there, a server error, a body
+that is not JSON): every exception `Json::request()` throws leaves its trace's arguments out.
 
 ## What to catch where
 
